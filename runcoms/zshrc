@@ -1,14 +1,259 @@
 #
 # Executes commands at the start of an interactive session.
 #
-# Authors:
-#   Sorin Ionescu <sorin.ionescu@gmail.com>
-#
 
-# Source Prezto.
 if [[ -s "${ZDOTDIR:-$HOME}/.zprezto/init.zsh" ]]; then
   source "${ZDOTDIR:-$HOME}/.zprezto/init.zsh"
 fi
 
-# Customize to your needs...
+# Ex-oh-my-zsh plugins
+alias st='/Applications/Sublime\ Text\ 2.app/Contents/SharedSupport/bin/subl'
 
+alias take=mkdcd
+
+zstyle ':prezto:module:editor:info:completing' format ''
+
+# History
+export HISTIGNORE="&:ls:[bf]g:exit"
+export HISTSIZE=40000
+export HISTFILESIZE=1000000
+unsetopt correct_all
+unsetopt share_history  # between-terminal sharing - kinda annoying.
+setopt extended_history
+setopt histignorespace
+
+# ZSH Options
+autoload zmv
+setopt extended_glob
+unset MAILCHECK
+
+# Remove dot from wordchars so that we can skip it.
+export WORDCHARS="*?_[]~&;\!#%^(){}<>"
+
+# The ultimate history mode
+up-line-or-search-prefix () {
+  local CURSOR_before_search=$CURSOR
+  zle up-line-or-search "$LBUFFER"
+  CURSOR=$CURSOR_before_search
+}
+zle -N up-line-or-search-prefix
+bindkey "^[OA" 'up-line-or-search-prefix'
+
+down-line-or-search-prefix () {
+  local CURSOR_before_search=$CURSOR
+  zle down-line-or-search "$LBUFFER"
+  CURSOR=$CURSOR_before_search
+}
+zle -N down-line-or-search-prefix
+bindkey "^[OB" 'down-line-or-search-prefix'
+
+#   ___  ____
+#  / _ \/ ___|
+# | | | \___ \
+# | |_| |___) |
+#  \___/|____/
+#
+
+# Customize to your needs...
+export PATH=/Users/chainz/script:/Users/chainz/bin
+export PATH=$PATH:/usr/local/share/npm/bin:/usr/local/mysql/bin:/Applications/Inkscape.app/Contents/Resources/bin
+export PATH=$PATH:/Developer/NVIDIA/CUDA-5.0/bin:/usr/local/Cellar/ruby/2.0.0-p0/bin
+export PATH=$PATH:/Library/Internet\ Plug-Ins/JavaAppletPlugin.plugin/Contents/Home/bin
+export PATH=$PATH:/usr/X11/bin:/usr/local/bin:/usr/bin:/bin:/usr/local/sbin:/usr/sbin:/sbin:/opt/local/libexec/gnubin:/opt/local/bin:/opt/local/sbin
+
+export EDITOR=st
+
+# Increase file-watchable number
+ulimit -n 4096
+
+function pfd() {
+  osascript 2>/dev/null <<EOF
+    tell application "Finder"
+      return POSIX path of (target of window 1 as alias)
+    end tell
+EOF
+}
+
+function pfs() {
+  osascript 2>/dev/null <<EOF
+    set output to ""
+    tell application "Finder" to set the_selection to selection
+    set item_count to count the_selection
+    repeat with item_index from 1 to count the_selection
+      if item_index is less than item_count then set the_delimiter to "\n"
+      if item_index is item_count then set the_delimiter to ""
+      set output to output & ((item item_index of the_selection as alias)'s POSIX path) & the_delimiter
+    end repeat
+EOF
+}
+
+function cdf() {
+  cd "$(pfd)"
+}
+
+function pushdf() {
+  pushd "$(pfd)"
+}
+
+function quick-look() {
+  (( $# > 0 )) && qlmanage -p $* &>/dev/null &
+}
+
+function man-preview() {
+  man -t "$@" | open -f -a Preview
+}
+
+function trash() {
+  local trash_dir="${HOME}/.Trash"
+  local temp_ifs=$IFS
+  IFS=$'\n'
+  for item in "$@"; do
+    if [[ -e "$item" ]]; then
+      item_name="$(basename $item)"
+      if [[ -e "${trash_dir}/${item_name}" ]]; then
+        mv -f "$item" "${trash_dir}/${item_name} $(date "+%H-%M-%S")"
+      else
+        mv -f "$item" "${trash_dir}/"
+      fi
+    fi
+  done
+  IFS=$temp_ifs
+}
+
+#     _    _ _
+#    / \  | (_) __ _ ___  ___  ___
+#   / _ \ | | |/ _` / __|/ _ \/ __|
+#  / ___ \| | | (_| \__ \  __/\__ \
+# /_/   \_\_|_|\__,_|___/\___||___/
+#
+
+# some more ls aliases
+
+alias lsa='ls -al'
+alias lsl='ls -1'
+# Color listing
+# eval $(dircolors ~/.dir_colors)
+# zstyle ':completion:*' list-colors "${(s.:.)LS_COLORS}"
+# export LS_OPTIONS='--color'
+# alias sl='ls $LS_OPTIONS' # often screw this up
+# alias la='ls -A $LS_OPTIONS'
+# alias lsl='ls -alF $LS_OPTIONS'
+# alias lc='ls -R $LS_OPTIONS'
+
+# Protecting against rm!
+alias rrm='/bin/rm -i'
+alias rm='trash'
+
+alias D='cd ~/Downloads'
+alias c=cd
+
+# GIT Aliases
+
+alias g='git'
+compdef g=git
+
+alias gs="git status -s"
+compdef _git gs=git-status
+alias gsl="git status | less -R"
+compdef _git gsl=git-status
+
+alias gcm="g commit -m"
+compdef _git gcm=git-commit
+
+alias gd="git diff"
+compdef _git gd=git-diff
+alias gdc="git diff --cached"
+compdef _git gdc=git-diff
+
+alias gl="git log --stat"
+compdef _git gl=git-log
+
+
+# Git log full diff with no context
+alias gld0="gld -U0"
+compdef _git gld0=git-log
+
+# Git log patch with no context = diffs on one file only
+alias glp='git log --topo-order --stat --patch -U0 --pretty=format:${_git_log_medium_format} --follow'
+
+alias pull="g pull"
+alias push="g push"
+
+alias gaa="g add --all && git status"
+alias gpp="pull && push"
+alias gap="g add -p"
+
+# Other app aliases
+alias node-interactive="repl.history"
+alias _string="gumba"
+alias jpegoptim="jpegoptim --strip-all"
+alias optimize_jpegs="find . -iname \"*.jpg\" -exec jpegoptim --strip-all {} \;"
+alias cw="compass watch"
+alias vlc="rlwrap /Applications/VLC.app/Contents/MacOS/VLC -I cli"
+alias ql="quick-look" # preview a file using QuickLook
+alias chrome="/usr/bin/open -a \"/Applications/Google Chrome.app\""
+alias itunes="/usr/bin/open -a \"/Applications/iTunes.app\""
+
+# Lifelogger aliases
+alias l="~/Documents/projects/lifelogger/lifelogger.py"
+alias q="~/Documents/projects/lifelogger/lifelogger.py quickadd"
+
+# Utilities
+alias bc="bc -l"
+function calc {
+  [[ -n "$1" ]] && echo "$1" | bc
+}
+
+# Mac aliases
+alias finder_show_hidden="defaults write com.apple.finder AppleShowAllFiles TRUE && killall Finder"
+alias finder_hide_hidden="defaults write com.apple.finder AppleShowAllFiles FALSE && killall Finder"
+
+#  ____                 _                            ____  _
+# |  _ \ __ _ ___ _ __ | |__   ___ _ __ _ __ _   _  |  _ \(_)
+# | |_) / _` / __| '_ \| '_ \ / _ \ '__| '__| | | | | |_) | |
+# |  _ < (_| \__ \ |_) | |_) |  __/ |  | |  | |_| | |  __/| |
+# |_| \_\__,_|___/ .__/|_.__/ \___|_|  |_|   \__, | |_|   |_|
+#                |_|                         |___/
+
+alias pi="ssh pi@192.168.1.75"
+
+
+#  ____        _   _
+# |  _ \ _   _| |_| |__   ___  _ __
+# | |_) | | | | __| '_ \ / _ \| '_ \
+# |  __/| |_| | |_| | | | (_) | | | |
+# |_|    \__, |\__|_| |_|\___/|_| |_|
+#        |___/
+
+# Set python environment to IPython
+export PYTHONSTARTUP=~/.python_startup
+
+alias py="python"
+alias py3="python3"
+alias json_format="python -m json.tool"
+
+# For virtualenvs
+source /usr/local/share/python/virtualenvwrapper.sh
+
+#  ____                 _               _
+# |  _ \ _   _ _ __ ___| |__   __ _ ___(_) ___
+# | |_) | | | | '__/ _ \ '_ \ / _` / __| |/ __|
+# |  __/| |_| | | |  __/ |_) | (_| \__ \ | (__
+# |_|    \__,_|_|  \___|_.__/ \__,_|___/_|\___|
+
+export PUREBASIC_HOME=/Applications/PureBasic/
+export PATH=$PATH:${PUREBASIC_HOME}compilers
+
+# Autojump (load at end to only listen to user's cd commands)
+[[ -s `brew --prefix`/etc/autojump.sh ]] && . `brew --prefix`/etc/autojump.sh
+
+# List directory contents after a 'cd'
+function chpwd() {
+    emulate -LR zsh
+    ls
+}
+
+source ~/.z-memrise-extras.zsh
+
+# Every new terminal, tell me about what day I am on in my life.
+~/script/life_days
