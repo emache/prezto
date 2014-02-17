@@ -254,6 +254,3 @@ function chpwd() {
 }
 
 source ~/.z-memrise-extras.zsh
-
-# Every new terminal, tell me about what day I am on in my life.
-~/script/life_days
