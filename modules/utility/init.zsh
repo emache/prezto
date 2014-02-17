@@ -121,7 +121,6 @@ else
   fi
 fi
 
-alias pbc='pbcopy'
 alias pbp='pbpaste'
 
 # File Download
