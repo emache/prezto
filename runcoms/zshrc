@@ -47,6 +47,10 @@ down-line-or-search-prefix () {
 zle -N down-line-or-search-prefix
 bindkey "^[OB" 'down-line-or-search-prefix'
 
+# Add in brew autocompletions
+fpath=(/usr/local/share/zsh-completions $fpath)
+compinit -u
+
 #   ___  ____
 #  / _ \/ ___|
 # | | | \___ \
