@@ -237,7 +237,7 @@ alias py3="python3"
 alias json_format="python -m json.tool"
 
 # For virtualenvs
-source /usr/local/share/python/virtualenvwrapper.sh
+source /usr/local/bin/virtualenvwrapper.sh
 
 #  ____                 _               _
 # |  _ \ _   _ _ __ ___| |__   __ _ ___(_) ___
