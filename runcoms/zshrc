@@ -239,6 +239,16 @@ alias json_format="python -m json.tool"
 # For virtualenvs
 source /usr/local/bin/virtualenvwrapper.sh
 
+#  ____        _
+# |  _ \ _   _| |__  _   _
+# | |_) | | | | '_ \| | | |
+# |  _ <| |_| | |_) | |_| |
+# |_| \_\\__,_|_.__/ \__, |
+#                    |___/
+export GEM_HOME="$(brew --prefix)/opt/gems"
+export GEM_PATH="$(brew --prefix)/opt/gems"
+
+
 #  ____                 _               _
 # |  _ \ _   _ _ __ ___| |__   __ _ ___(_) ___
 # | |_) | | | | '__/ _ \ '_ \ / _` / __| |/ __|
