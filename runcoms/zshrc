@@ -270,4 +270,4 @@ function chpwd() {
     ls
 }
 
-source ~/.z-memrise-extras.zsh
+[[ -s ~/.z-memrise-extras.zsh ]] && source ~/.z-memrise-extras.zsh
