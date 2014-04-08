@@ -274,4 +274,6 @@ function chpwd() {
     ls
 }
 
+[[ -s ~/bin/arcanist ]] && source ~/bin/arcanist/resources/shell/bash-completion
+
 [[ -s ~/.z-memrise-extras.zsh ]] && source ~/.z-memrise-extras.zsh
