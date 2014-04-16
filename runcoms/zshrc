@@ -6,13 +6,6 @@ if [[ -s "${ZDOTDIR:-$HOME}/.zprezto/init.zsh" ]]; then
   source "${ZDOTDIR:-$HOME}/.zprezto/init.zsh"
 fi
 
-# Ex-oh-my-zsh plugins
-if [[ -s "/Applications/Sublime\ Text\ 2.app/" ]]; then
-  alias st='/Applications/Sublime\ Text\ 2.app/Contents/SharedSupport/bin/subl'
-else
-  alias st='~/Applications/Sublime\ Text\ 2.app/Contents/SharedSupport/bin/subl'
-fi
-
 alias take=mkdcd
 
 zstyle ':prezto:module:editor:info:completing' format ''
@@ -52,11 +45,11 @@ zle -N down-line-or-search-prefix
 bindkey "^[OB" 'down-line-or-search-prefix'
 
 # Add in brew autocompletions
-fpath=(/usr/local/share/zsh-completions $fpath)
+[[ -s /usr/local/share/zsh-completions ]] && fpath=(/usr/local/share/zsh-completions $fpath)
 compinit -u
 
 # Add in aws completions
-source /usr/local/bin/aws_zsh_completer.sh
+[[ -s /usr/local/bin/aws_zsh_completer.sh ]] && source /usr/local/bin/aws_zsh_completer.sh
 
 #   ___  ____
 #  / _ \/ ___|
@@ -252,9 +245,10 @@ source /usr/local/bin/virtualenvwrapper.sh
 # |  _ <| |_| | |_) | |_| |
 # |_| \_\\__,_|_.__/ \__, |
 #                    |___/
-export GEM_HOME="$(brew --prefix)/opt/gems"
-export GEM_PATH="$(brew --prefix)/opt/gems"
-
+if command -v brew; then
+  export GEM_HOME="$(brew --prefix)/opt/gems"
+  export GEM_PATH="$(brew --prefix)/opt/gems"
+fi
 
 #  ____                 _               _
 # |  _ \ _   _ _ __ ___| |__   __ _ ___(_) ___
@@ -266,7 +260,9 @@ export PUREBASIC_HOME=/Applications/PureBasic/
 export PATH=$PATH:${PUREBASIC_HOME}compilers
 
 # Autojump (load at end to only listen to user's cd commands)
-[[ -s `brew --prefix`/etc/autojump.sh ]] && . `brew --prefix`/etc/autojump.sh
+if command -v brew; then
+  [[ -s `brew --prefix`/etc/autojump.sh ]] && . `brew --prefix`/etc/autojump.sh
+fi
 
 # List directory contents after a 'cd'
 function chpwd() {
@@ -277,3 +273,11 @@ function chpwd() {
 [[ -s ~/bin/arcanist ]] && source ~/bin/arcanist/resources/shell/bash-completion
 
 [[ -s ~/.z-memrise-extras.zsh ]] && source ~/.z-memrise-extras.zsh
+
+
+# Ex-oh-my-zsh plugins
+if [[ -s "~/Applications/Sublime\ Text\ 2.app/" ]]; then
+  alias st='~/Applications/Sublime\ Text\ 2.app/Contents/SharedSupport/bin/subl'
+else
+    alias st=nano
+fi
