@@ -276,7 +276,7 @@ function chpwd() {
 
 
 # Ex-oh-my-zsh plugins
-if [[ -s "~/Applications/Sublime\ Text\ 2.app/" ]]; then
+if [[ -d ~/Applications/Sublime\ Text\ 2.app ]]; then
   alias st='~/Applications/Sublime\ Text\ 2.app/Contents/SharedSupport/bin/subl'
 else
     alias st=nano
