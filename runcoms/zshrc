@@ -245,7 +245,9 @@ alias json_format="python -m json.tool"
 # |  _ <| |_| | |_) | |_| |
 # |_| \_\\__,_|_.__/ \__, |
 #                    |___/
-if command -v brew 1>/dev/null; then
+if command -v rbenv 1>/dev/null; then
+  eval "$(rbenv init -)"
+elif command -v brew 1>/dev/null; then
   export GEM_HOME="$(brew --prefix)/opt/gems"
   export GEM_PATH="$(brew --prefix)/opt/gems"
 fi
