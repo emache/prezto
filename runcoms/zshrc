@@ -239,6 +239,9 @@ alias json_format="python -m json.tool"
 # For virtualenvs
 [[ -s /usr/local/bin/virtualenvwrapper.sh ]] && source /usr/local/bin/virtualenvwrapper.sh
 
+# Ansible
+export ANSIBLE_COW_SELECTION=three-eyes
+
 #  ____        _
 # |  _ \ _   _| |__  _   _
 # | |_) | | | | '_ \| | | |
