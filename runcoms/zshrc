@@ -242,6 +242,9 @@ alias json_format="python -m json.tool"
 # Ansible
 export ANSIBLE_COW_SELECTION=three-eyes
 
+# MySQL
+export MYSQL_PS1="\u@\h [\c]> "
+
 #  ____        _
 # |  _ \ _   _| |__  _   _
 # | |_) | | | | '_ \| | | |
