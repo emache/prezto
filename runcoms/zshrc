@@ -135,6 +135,7 @@ function trash() {
 
 alias lsa='ls -al'
 alias lsl='ls -1'
+alias lsh='ls -alh'
 # Color listing
 # eval $(dircolors ~/.dir_colors)
 # zstyle ':completion:*' list-colors "${(s.:.)LS_COLORS}"
