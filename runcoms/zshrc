@@ -200,8 +200,8 @@ alias chrome="/usr/bin/open -a \"/Applications/Google Chrome.app\""
 alias itunes="/usr/bin/open -a \"/Applications/iTunes.app\""
 
 # Lifelogger aliases
-alias l="~/Documents/projects/lifelogger/lifelogger.py"
-alias q="~/Documents/projects/lifelogger/lifelogger.py quickadd"
+alias l=lifelogger
+alias q="lifelogger quickadd"
 
 # Utilities
 alias bc="bc -l"
@@ -212,16 +212,6 @@ function calc {
 # Mac aliases
 alias finder_show_hidden="defaults write com.apple.finder AppleShowAllFiles TRUE && killall Finder"
 alias finder_hide_hidden="defaults write com.apple.finder AppleShowAllFiles FALSE && killall Finder"
-
-#  ____                 _                            ____  _
-# |  _ \ __ _ ___ _ __ | |__   ___ _ __ _ __ _   _  |  _ \(_)
-# | |_) / _` / __| '_ \| '_ \ / _ \ '__| '__| | | | | |_) | |
-# |  _ < (_| \__ \ |_) | |_) |  __/ |  | |  | |_| | |  __/| |
-# |_| \_\__,_|___/ .__/|_.__/ \___|_|  |_|   \__, | |_|   |_|
-#                |_|                         |___/
-
-alias pi="ssh pi@192.168.1.75"
-
 
 #  ____        _   _
 # |  _ \ _   _| |_| |__   ___  _ __
