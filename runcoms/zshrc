@@ -230,7 +230,7 @@ alias json_format="python -m json.tool"
 [[ -s /usr/local/bin/virtualenvwrapper.sh ]] && source /usr/local/bin/virtualenvwrapper.sh
 
 # Ansible
-export ANSIBLE_COW_SELECTION=three-eyes
+export ANSIBLE_COW_SELECTION=three-head
 
 # MySQL
 export MYSQL_PS1="\u@\h [\c]> "
