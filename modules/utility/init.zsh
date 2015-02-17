@@ -104,7 +104,9 @@ alias sl='ls'            # I often screw this up.
 
 # Grep
 if zstyle -t ':prezto:module:utility:grep' color; then
-  export GREP_COLOR='37;45'
+  export GREP_COLOR='37;45'           # BSD.
+  export GREP_COLORS="mt=$GREP_COLOR" # GNU.
+
   alias grep="$aliases[grep] --color=auto"
 fi
 
@@ -188,5 +190,5 @@ function find-exec {
 
 # Displays user owned processes status.
 function psu {
-  ps -U "${1:-$USER}" -o 'pid,%cpu,%mem,command' "${(@)argv[2,-1]}"
+  ps -U "${1:-$LOGNAME}" -o 'pid,%cpu,%mem,command' "${(@)argv[2,-1]}"
 }
