@@ -223,10 +223,11 @@ alias finder_hide_hidden="defaults write com.apple.finder AppleShowAllFiles FALS
 # Set python environment to IPython
 export PYTHONSTARTUP=~/.python_startup
 
-unalias py
+unalias py >/dev/null 2>&1 || true
 alias json_format="python -m json.tool"
 
 # For virtualenvs
+unfunction chpwd  # Is reset in a few lines - virtualenvwrapper does a few `cd`s
 [[ -s /usr/local/bin/virtualenvwrapper.sh ]] && source /usr/local/bin/virtualenvwrapper.sh
 
 # Ansible
@@ -282,7 +283,7 @@ if [[ -s ~/.boto ]]; then
   export AWS_ACCESS_KEY_ID=$(grep aws_access_key_id ~/.boto | awk '{print $3;}')
   export AWS_SECRET_ACCESS_KEY=$(grep aws_secret_access_key ~/.boto | awk '{print $3;}')
   export AWS_EC2_REGION=$(grep ec2_region_name ~/.boto | awk '{print $3;}')
-  export AWS_DEFAULT_REGION=$(grep ec2_region_name ~/.boto | awk '{print $3;}')
+  export AWS_DEFAULT_REGION=$AWS_EC2_REGION
 fi
 
 # Extra secrets for this computer
