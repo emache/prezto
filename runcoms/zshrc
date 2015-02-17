@@ -227,7 +227,7 @@ unalias py >/dev/null 2>&1 || true
 alias json_format="python -m json.tool"
 
 # For virtualenvs
-unfunction chpwd  # Is reset in a few lines - virtualenvwrapper does a few `cd`s
+unfunction chpwd >/dev/null 2>&1 || true  # Is reset in a few lines - virtualenvwrapper does a few `cd`s
 [[ -s /usr/local/bin/virtualenvwrapper.sh ]] && source /usr/local/bin/virtualenvwrapper.sh
 
 # Ansible
