@@ -235,6 +235,8 @@ pyclean () {
     find . -type d -name "__pycache__" -delete
 }
 
+if which pyenv > /dev/null; then eval "$(pyenv init -)"; fi
+
 # Ansible
 export ANSIBLE_COW_SELECTION=two-heads
 
