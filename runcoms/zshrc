@@ -18,6 +18,7 @@ unsetopt correct_all
 unsetopt share_history  # between-terminal sharing - kinda annoying.
 setopt extended_history
 setopt histignorespace
+setopt interactivecomments
 
 # ZSH Options
 autoload zmv
