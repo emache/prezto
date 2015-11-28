@@ -200,10 +200,6 @@ alias ql="quick-look" # preview a file using QuickLook
 alias chrome="/usr/bin/open -a \"/Applications/Google Chrome.app\""
 alias itunes="/usr/bin/open -a \"/Applications/iTunes.app\""
 
-# Lifelogger aliases
-alias l=lifelogger
-alias q="lifelogger quickadd"
-
 # Utilities
 alias bc="bc -l"
 function calc {
@@ -221,12 +217,6 @@ alias finder_hide_hidden="defaults write com.apple.finder AppleShowAllFiles FALS
 # |_|    \__, |\__|_| |_|\___/|_| |_|
 #        |___/
 
-# Set python environment to IPython
-export PYTHONSTARTUP=~/.python_startup
-
-unalias py >/dev/null 2>&1 || true
-alias json_format="python -m json.tool"
-
 # For virtualenvs
 unfunction chpwd >/dev/null 2>&1 || true  # Is reset in a few lines - virtualenvwrapper does a few `cd`s
 [[ -s /usr/local/bin/virtualenvwrapper.sh ]] && source /usr/local/bin/virtualenvwrapper.sh
@@ -235,34 +225,6 @@ pyclean () {
     find . -type f -name "*.py[co]" -delete
     find . -type d -name "__pycache__" -delete
 }
-
-# Ansible
-export ANSIBLE_COW_SELECTION=two-heads
-
-# MySQL
-export MYSQL_PS1="\u@\h [\c]> "
-
-#  ____        _
-# |  _ \ _   _| |__  _   _
-# | |_) | | | | '_ \| | | |
-# |  _ <| |_| | |_) | |_| |
-# |_| \_\\__,_|_.__/ \__, |
-#                    |___/
-if command -v rbenv 1>/dev/null; then
-  eval "$(rbenv init -)"
-elif command -v brew 1>/dev/null; then
-  export GEM_HOME="$(brew --prefix)/opt/gems"
-  export GEM_PATH="$(brew --prefix)/opt/gems"
-fi
-
-#  ____                 _               _
-# |  _ \ _   _ _ __ ___| |__   __ _ ___(_) ___
-# | |_) | | | | '__/ _ \ '_ \ / _` / __| |/ __|
-# |  __/| |_| | | |  __/ |_) | (_| \__ \ | (__
-# |_|    \__,_|_|  \___|_.__/ \__,_|___/_|\___|
-
-export PUREBASIC_HOME=/Applications/PureBasic/
-export PATH=$PATH:${PUREBASIC_HOME}compilers
 
 # Autojump (load at end to only listen to user's cd commands)
 if command -v brew 1>/dev/null; then
@@ -275,24 +237,9 @@ function chpwd() {
     ls
 }
 
-[[ -s ~/bin/arcanist ]] && source ~/bin/arcanist/resources/shell/bash-completion
-
 # Ex-oh-my-zsh plugins
 if [[ -d ~/Applications/Sublime\ Text.app ]]; then
   alias st='~/Applications/Sublime\ Text.app/Contents/SharedSupport/bin/subl'
 else
     alias st=nano
-fi
-
-# Read boto vars into env
-if [[ -s ~/.boto ]]; then
-  export AWS_ACCESS_KEY_ID=$(grep aws_access_key_id ~/.boto | awk '{print $3;}')
-  export AWS_SECRET_ACCESS_KEY=$(grep aws_secret_access_key ~/.boto | awk '{print $3;}')
-  export AWS_EC2_REGION=$(grep ec2_region_name ~/.boto | awk '{print $3;}')
-  export AWS_DEFAULT_REGION=$AWS_EC2_REGION
-fi
-
-# Extra secrets for this computer
-if [[ -s ~/.zsecret ]]; then
-  source ~/.zsecret
 fi
